@@ -30,7 +30,7 @@ class NashEquilibrium:
                     
         return nash_equilibria
     
-    def print_prue_strategies(self):
+    def print_pure_strategies(self):
         equilibria = self.find_pure_strategy_nash_equilibria()
         if not equilibria:
             print("No pure strategy Nash equilibria found.")
@@ -38,3 +38,33 @@ class NashEquilibrium:
             for eq in equilibria:
                 print(f"Pure strategy Nash equilibrium: Player 1 plays {eq[0]}, Player 2 plays {eq[1]}")
 
+
+
+    def remove_dominated_p1(self):
+        row_num=len(self.payout_matrix)
+        col_num=len(self.payout_matrix[0])
+        max_values=[]
+        for c in range(col_num):
+            max_payout=max([self.payout_matrix[r][c][0] for r in range(row_num)])
+            rows_to_keep=set()
+            for r in range(row_num):
+                if self.payout_matrix[r][c][0] == max_payout:
+                    rows_to_keep.add(r)
+                max_values.append(rows_to_keep)
+
+        rows_to_keep=[]
+        while max_values:
+            maximum_intersection= max_values[0].copy()
+            for c in range(1, len(max_values)):
+                if len(maximum_intersection & max_values[c]) !=0:
+                    maximum_intersection = maximum_intersection & max_values[c]
+            
+            max_index= maximum_intersection.pop()
+            rows_to_keep.append(max_index)
+            max_values=[row for row in max_values if max_index not in row]
+        
+        new_matrix= [self.payout_matrix[i] for i in sorted(rows_to_keep)]
+        self.payout_matrix= new_matrix
+        self.row_labels=[self.row_labels[i] for i in sorted(rows_to_keep)]
+        return row_num !=len(rows_to_keep)
+    
