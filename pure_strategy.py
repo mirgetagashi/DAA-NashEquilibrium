@@ -67,4 +67,36 @@ class NashEquilibrium:
         self.payout_matrix= new_matrix
         self.row_labels=[self.row_labels[i] for i in sorted(rows_to_keep)]
         return row_num !=len(rows_to_keep)
+
+    def remove_dominant_p2(self):
+        row_num=len(self.payout_matrix)
+        col_num=len(self.payout_matrix[0])
+        max_values=[]
+        for r in range(row_num):
+            max_payout=max([self.payout_matrix[r][c][1] for c in range(col_num)])
+            cols_to_keep=set()
+            for c in range(col_num):
+                if self.payout_matrix[r][c][1]==max_payout:
+                    cols_to_keep.add(c)
+            max_values.append(cols_to_keep)
+
+        cols_to_keep=[]
+        while max_values:
+            maximum_intersaction = max_values[0].copy()
+            for c in range(1, len(max_values)):
+                if len(maximum_intersaction & max_values[c])!=0:
+                    maximum_intersaction = maximum_intersaction & max_values[c]
+                
+            max_index=maximum_intersaction.pop()
+            cols_to_keep.append(max_index)
+            max_values= [col for col in max_values if max_index not in col]
+            
+        new_matrix=[[] for _ in range(row_num)]
+        for c in sorted(cols_to_keep):
+            for r in range (row_num):
+                new_matrix[r].append(self.payout_matrix[r][c])
+        self.payout_matrix = new_matrix
+        self.col_labels = [self.col_labels[i] for i in sorted(cols_to_keep)]
+        return col_num != len(cols_to_keep)
+    
     
