@@ -102,3 +102,41 @@ class NashEquilibrium:
         return col_num != len(cols_to_keep)
     
     
+
+    def mixed_strategy(self):
+        self.remove_dominated_moves()
+        p1_probabilities = {}
+        p2_probabilities = {}
+
+        col_length = len(self.payout_matrix[0])
+        row_length = len(self.payout_matrix)
+
+        if col_length == 1 and row_length == 1:
+            p1_probabilities[self.row_labels[0]] = 1.0
+            p2_probabilities[self.col_labels[0]] = 1.0
+            return p1_probabilities, p2_probabilities
+        
+        p1_outcomes = [[1] * row_length]
+        for c in range(1, col_length):
+            p1_outcomes.append([self.payout_matrix[r][c][1] - self.payout_matrix[r][0][1] for r in range(row_length)])
+        p1_solutions = [1] + [0] * (row_length - 1)
+        p1_outcomes = np.linalg.solve(np.array(p1_outcomes), np.array(p1_solutions))
+        for r in range(len(self.row_labels)):
+            p1_probabilities[self.row_labels[r]] = p1_outcomes[r]
+
+        p2_outcomes = [[1] * col_length]
+        for r in range(1, row_length):
+            p2_outcomes.append([self.payout_matrix[r][c][0] - self.payout_matrix[0][c][0] for c in range(col_length)])
+        p2_solutions = [1] + [0] * (col_length - 1)
+        p2_outcomes = np.linalg.solve(np.array(p2_outcomes), np.array(p2_solutions))
+        for c in range(len(self.col_labels)):
+            p2_probabilities[self.col_labels[c]] = p2_outcomes[c]
+
+        for label in self.original_row_labels:
+            if label not in self.row_labels:
+                p1_probabilities[label] = 0.0
+        for label in self.original_col_labels:
+            if label not in self.col_labels:
+                p2_probabilities[label] = 0.0
+
+        return p1_probabilities, p2_probabilities
