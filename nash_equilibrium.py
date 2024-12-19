@@ -1,3 +1,5 @@
+import numpy as np
+
 class NashEquilibrium:
     def __init__(self, matrix, row_labels=None, col_labels=None):
         self.payout_matrix=matrix
@@ -83,7 +85,7 @@ class NashEquilibrium:
         self.row_labels=[self.row_labels[i] for i in sorted(rows_to_keep)]
         return row_num !=len(rows_to_keep)
 
-    def remove_dominant_p2(self):
+    def remove_dominated_p2(self):
         row_num=len(self.payout_matrix)
         col_num=len(self.payout_matrix[0])
         max_values=[]
