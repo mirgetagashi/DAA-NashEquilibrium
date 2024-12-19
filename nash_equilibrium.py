@@ -35,10 +35,10 @@ class NashEquilibrium:
     def print_pure_strategies(self):
         equilibria = self.find_pure_strategy_nash_equilibria()
         if not equilibria:
-            print("No pure strategy Nash equilibria found.")
+            print("\nPure Strategies: None")
         else:
-            for eq in equilibria:
-                print(f"Pure strategy Nash equilibrium: Player 1 plays {eq[0]}, Player 2 plays {eq[1]}")
+            pure_str = ", ".join(f"({eq[0]},{eq[1]})" for eq in equilibria)
+            print(f"\nPure Strategies: {pure_str}")
 
 
 
@@ -140,3 +140,6 @@ class NashEquilibrium:
                 p2_probabilities[label] = 0.0
 
         return p1_probabilities, p2_probabilities
+
+
+
