@@ -141,5 +141,19 @@ class NashEquilibrium:
 
         return p1_probabilities, p2_probabilities
 
+def print_mix_strategies(self):
+        equilibrium = self.mixed_strategy()
+        p1_str = ", ".join(f"{equilibrium[0].get(k, 0.0):.1f}" for k in self.original_row_labels)
+        p2_str = ", ".join(f"{equilibrium[1].get(k, 0.0):.1f}" for k in self.original_col_labels)
+    
+        print(f"\nMix Strategies: P1 ({p1_str}), P2 ({p2_str})")
+
+
+
+    def remove_dominated_moves(self):
+        while self.remove_dominated_p1() | self.remove_dominated_p2():
+            pass
+
+
 
 
