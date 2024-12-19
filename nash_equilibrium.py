@@ -1,8 +1,10 @@
 class NashEquilibrium:
-    def __init__(self, matrix):
+    def __init__(self, matrix, row_labels=None, col_labels=None):
         self.payout_matrix=matrix
-        self.row_labels=list(range(len(self.payout_matrix)))
-        self.col_labels=list(range(len(self.payout_matrix[0])))
+        self.original_row_labels = row_labels if row_labels else list(range(len(self.payout_matrix)))
+        self.original_col_labels = col_labels if col_labels else list(range(len(self.payout_matrix[0])))
+        self.row_labels = self.original_row_labels.copy()
+        self.col_labels = self.original_col_labels.copy()
 
     def find_pure_strategy_nash_equilibria(self):
         nash_equilibria = []
