@@ -6,6 +6,19 @@ class NashEquilibrium:
         self.row_labels = self.original_row_labels.copy()
         self.col_labels = self.original_col_labels.copy()
 
+
+    def print_matrix(self):
+        print("\nPayoff Matrix:")
+        cell_width = 10
+        header_separator = "+" + "-".join(["-" * cell_width] * len(self.col_labels)) + "+"
+        print(header_separator)
+        for row in self.payout_matrix:
+            row_str = "|".join([f" {cell[0]:>5},{cell[1]:>5} " for cell in row])
+            print(f"|{row_str}|")
+            print(header_separator)
+
+
+
     def find_pure_strategy_nash_equilibria(self):
         nash_equilibria = []
         
@@ -101,7 +114,11 @@ class NashEquilibrium:
         self.col_labels = [self.col_labels[i] for i in sorted(cols_to_keep)]
         return col_num != len(cols_to_keep)
     
-    
+
+    def remove_dominated_moves(self):
+        while self.remove_dominated_p1() | self.remove_dominated_p2():
+            pass
+
 
     def mixed_strategy(self):
         self.remove_dominated_moves()
@@ -141,19 +158,11 @@ class NashEquilibrium:
 
         return p1_probabilities, p2_probabilities
 
-def print_mix_strategies(self):
+    def print_mix_strategies(self):
         equilibrium = self.mixed_strategy()
         p1_str = ", ".join(f"{equilibrium[0].get(k, 0.0):.1f}" for k in self.original_row_labels)
         p2_str = ", ".join(f"{equilibrium[1].get(k, 0.0):.1f}" for k in self.original_col_labels)
     
         print(f"\nMix Strategies: P1 ({p1_str}), P2 ({p2_str})")
-
-
-
-    def remove_dominated_moves(self):
-        while self.remove_dominated_p1() | self.remove_dominated_p2():
-            pass
-
-
 
 
