@@ -27,10 +27,9 @@ def matrixInput(rows, columns):
 
 
 def main():
-    typeResponse = input("Press any key to start or type exit to stop: ")
     inputResponse = ""
 
-    while typeResponse != "exit" or inputResponse != "exit":
+    while True:
         print("_______________________________________________________")
         print("If you would like to calculate the Nash eqilibriums of a game press n")
         print("If you would like to exit simply type exit")
@@ -68,6 +67,7 @@ def main():
 
 
         nash_game = NashEquilibrium(matrix)
+        nash_game.print_matrix()
         nash_game.print_mix_strategies()
         nash_game.print_pure_strategies()
 
