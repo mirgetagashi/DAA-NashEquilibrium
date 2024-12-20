@@ -82,6 +82,15 @@ A **Nash Equilibrium** is a set of strategies where no player can benefit by cha
 - **Mix Strategies**: P1 (0.8, 0.2, 0), P2 (0, 0.5, 0.5)
 
 ---
+## Results of the execution
+
+
+<img src="https://github.com/user-attachments/assets/0a8959f9-4a1a-4a34-ac01-28cca84345a3" alt="Screenshot" width="470" height="330" />
+
+
+
+
+---
 
 
 
